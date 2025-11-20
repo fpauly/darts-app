@@ -74,4 +74,9 @@ body {
     padding: 1.2rem 1rem;
   }
 }
+.hidden-fan {
+  display: none !important;
+}
+ 
+
 /*end*/
