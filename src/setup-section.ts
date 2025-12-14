@@ -9,7 +9,7 @@
  * Version: 1.0.0
  * -------------------------------------------------------
  */
-
+import './gamesetupstyle.css';
 import type { GameSettings, GameType, LegCount } from "./game-setting";
 
 // -------------------------------------------------------
@@ -18,31 +18,35 @@ import type { GameSettings, GameType, LegCount } from "./game-setting";
 export function setupSection() {
   return `
    <section class="card-fan" id="game_setting_section">
-      <h2 class="card-title-fan">Game setup</h2>
+      <h2 class="card-title-fan">Select Game setup</h2>
 
       <form id="game-settings-form" class="setup-grid">
 
-        <div class="form-group">
-          <label>Player 1:</label>
-          <input name="player1" required placeholder="Enter name" />
-        </div>
-
-        <div class="form-group">
-          <label>Player 2:</label>
-          <input name="player2" required placeholder="Enter name" />
-        </div>
-
-        <div class="form-group">
-          <label>Game type:</label>
-          <select name="gameType">
+       <div class="form-group">
+          <label></label>
+          <select class="selectbuttons" name="gameType" multiple>
             <option value="301">301 up</option>
             <option value="501">501 up</option>
           </select>
         </div>
 
+     
+
         <div class="form-group">
-          <label>Set size (legs):</label>
-          <select name="maxLegs">
+          <label class="playerfont"><img src="./images/iconplayer1.png" class="player-icon">Player 1:</img></label>
+          <input name="player1" class="playerform" required placeholder="Enter name" />
+        </div>
+
+        <div class="form-group">
+          <label class="playerfont"><img src="./images/iconplayer1.png" class="player-icon">Player 2:</img></label>
+          <input name="player2" class="playerform" required placeholder="Enter name" />
+        </div>
+
+       
+
+        <div class="form-group">
+          <label><h2 class="card-title-fan">Set size (legs):</h2></label>
+          <select class="selectset" name="maxLegs" multiple>
             <option value="3">Best of 3</option>
             <option value="5">Best of 5</option>
             <option value="7">Best of 7</option>
@@ -50,7 +54,7 @@ export function setupSection() {
         </div>
 
         <div class="form-buttons">
-          <button type="submit" class="btn-primary">Start game</button>
+          <button type="submit" class="startgame-button">Start game</button>
         </div>
 
       </form>

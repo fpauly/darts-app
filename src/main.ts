@@ -37,4 +37,17 @@ export function startGame(settings:GameSettings) {
 
 initAll();
 
+/**
+ * Code to catch global errors!
+ */
+
+window.addEventListener("error", (e) => {
+  console.error("Global error:", e.error);
+  alert("A fatal error occurred. Check console for details.");
+});
+
+window.addEventListener("unhandledrejection", (e) => {
+  console.error("Unhandled promise rejection:", e.reason);
+});
+
  

@@ -132,13 +132,27 @@ export function renderCurrentGame() {
 function onAddScore(points:number, whoIsPlaying:1|2){
   
   const p = whoIsPlaying === 1 ? gameState.player1 : gameState.player2;
-  p.score-=points;
+
+  if (p.score - points < 0) {
+    return alert("Score bust! You cannot go below zero.");
+  }
+  if (p.score - points === 1) {
+    return alert("Score bust! Cannot finish on 1.");
+  }
+
+  const otherSelector = whoIsPlaying === 1 ? "#score-input2" : "#score-input1";
+  const otherInput = document.querySelector<HTMLInputElement>(otherSelector);
+  const otherValue = otherInput ? otherInput.value : "";
+
+  p.score -= points;
+
    turns.push({
     id: Date.now(),         
     player: whoIsPlaying as 1 | 2,
     points,
     remaining: p.score,
   });
+
   if (p.score === 0) {
    
       p.legs += 1;
@@ -160,7 +174,17 @@ function onAddScore(points:number, whoIsPlaying:1|2){
       }
     
   }
+
+  // re-render UI
   renderCurrentGame();
+
+  const clickedSelector = whoIsPlaying === 1 ? "#score-input1" : "#score-input2";
+  const clickedInputAfter = document.querySelector<HTMLInputElement>(clickedSelector);
+  if (clickedInputAfter) clickedInputAfter.value = "";
+
+  const otherInputAfter = document.querySelector<HTMLInputElement>(otherSelector);
+  if (otherInputAfter) otherInputAfter.value = otherValue ?? "";
+
   renderHistory();
 }
 export function startNewMatch(){
