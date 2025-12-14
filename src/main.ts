@@ -22,7 +22,7 @@ export function initAll() {
   // historyEvents(deleteTurn);
 }
 
-export function startGame(settings:GameSettings) {
+export function startGame(settings:GameSettings) { 
 
   initGameState(settings);
   clearTurns();
