@@ -19,8 +19,8 @@ export function setupSection() {
   return `
   <div >
    <section class="card-fan" id="game_setting_section">
-   <img class="corner-icon left" src="../images/dartred.png" />
-  <img class="corner-icon right" src="../images/dartgreen.png" />
+   <img class="corner-icon left" src="/images/dartred.png" />
+  <img class="corner-icon right" src="/images/dartgreen.png" />
       <h2 class="card-title-fan">Select Game setup</h2>
 
       <form id="game-settings-form" class="setup-grid">
@@ -49,12 +49,12 @@ export function setupSection() {
         <br/>
 
         <div class="form-group">
-          <label class="playerfont"><img src="./images/iconplayer1.png" class="player-icon">Player 1:</img></label>
+          <label class="playerfont"><img src="/images/iconplayer1.png" class="player-icon">Player 1:</img></label>
           <input name="player1" class="playerform" required placeholder="Enter name" />
         </div>
 
         <div class="form-group">
-          <label class="playerfont"><img src="./images/iconplayer1.png" class="player-icon">Player 2:</img></label>
+          <label class="playerfont"><img src="/images/iconplayer1.png" class="player-icon">Player 2:</img></label>
           <input name="player2" class="playerform" required placeholder="Enter name" />
         </div>
         <label><h2 class="card-title-fan">Set size (legs):</h2></label>
