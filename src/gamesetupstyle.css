@@ -30,30 +30,17 @@
   text-align: center;
 }
 
-.selectbuttons option:hover {
-  background: #0ab81b22;
-  color: #f3f4f6;
-}
-
+.selectbuttons option:hover,
+.selectbuttons option:focus,
+.selectbuttons option:active,
 .selectbuttons option:checked {
   background: #0ab81b44;
   color: #f3f4f6;
 }
 
-/* this is original style button*/
-.selectgame-button {
-padding: 0.6rem;
-background-color: rgba(0, 0, 0, 0);
-border-radius: 0.18rem;
-border-color: #f3f4f6;
-font-weight: 43.75rem;
-font-size: 4.0rem;
-font-weight: bold;
-color: #ffffff;
-width: 22.80rem;
-height: 8.30rem;
-font-family: "Inter", sans-serif;
-}
+
+
+
 
 /*style for set-buttons*/
 .selectset {
@@ -88,26 +75,14 @@ font-family: "Inter", sans-serif;
   font-weight: bold;
   text-align: center;
 }
-.selectset option:hover {
-  background: #0ab81b22;
+
+.selectset option:hover,
+.selectset option:focus,
+.selectset option:active,
+.selectset option:checked {
+  background: #0ab81b44;
   color: #f3f4f6;
 }
-
-
-/*old style*/
-.selectset-button {
-margin-right: 0.3rem;
-width: 14.75rem;
-height: 3.7rem;  
-background-color: rgba(0, 0, 0, 0);
-border-radius: 0.18rem;
-border-color: #f3f4f6;
-font-family: "Inter", sans-serif;
-font-weight: 43.75rem;
-font-size: 2.0rem;
-color: #ffffff;
-}
-
 .startgame-button {
 margin-top: 0.8rem;  
 width: 46.2rem;
@@ -129,6 +104,7 @@ font-family: "Inter", sans-serif;
 
 .playerfont .player-icon {
   vertical-align: middle;
+  
 }
 
 .playerform {
@@ -141,6 +117,8 @@ color: #817979;
 font-size: 1rem;
 font-family: "Inter", sans-serif;
 }
+
+
 
 @media (max-width: 600px) {
   .selectbuttons {
@@ -164,11 +142,22 @@ font-family: "Inter", sans-serif;
   .startgame-button {
     width: 100%;
     height: 4.5rem;
-    font-size: 1rem;
+    font-size: 2rem;
   }
 
   .playerform {
     width: 100%;
     height: 2.5rem;
   }
+  .playerfont{
+    font-size: 1.5rem;
+  }
+
+.selectset option:hover,
+.selectset option:focus,
+.selectset option:active,
+.selectset option:checked {
+  background: #0ab81b44;
+  color: #f3f4f6;
+}
 }

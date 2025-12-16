@@ -17,20 +17,36 @@ import type { GameSettings, GameType, LegCount } from "./game-setting";
 // -------------------------------------------------------
 export function setupSection() {
   return `
+  <div >
    <section class="card-fan" id="game_setting_section">
+   <img class="corner-icon left" src="../images/dartred.png" />
+  <img class="corner-icon right" src="../images/dartgreen.png" />
       <h2 class="card-title-fan">Select Game setup</h2>
 
       <form id="game-settings-form" class="setup-grid">
 
        <div class="form-group">
-          <label></label>
-          <select class="selectbuttons" name="gameType" multiple>
-            <option value="301">301 up</option>
-            <option value="501">501 up</option>
-          </select>
+         <div class="game-type-fan">
+          <div class="btn-wrap">
+            <label class="btn-fan"  >
+              <input type="radio" name="gameType" value="301" checked>
+              <span>301 up</span>
+            </label>
+            </div>
+          
+            <div class="btn-wrap">
+            <label class="btn-fan">
+              <input type="radio" name="gameType" value="501">
+              <span>501 up</span>
+              
+          </label>
+          </div>
         </div>
 
-     
+
+        </div>
+
+        <br/>
 
         <div class="form-group">
           <label class="playerfont"><img src="./images/iconplayer1.png" class="player-icon">Player 1:</img></label>
@@ -41,17 +57,33 @@ export function setupSection() {
           <label class="playerfont"><img src="./images/iconplayer1.png" class="player-icon">Player 2:</img></label>
           <input name="player2" class="playerform" required placeholder="Enter name" />
         </div>
+        <label><h2 class="card-title-fan">Set size (legs):</h2></label>
 
-       
-
-        <div class="form-group">
-          <label><h2 class="card-title-fan">Set size (legs):</h2></label>
-          <select class="selectset" name="maxLegs" multiple>
-            <option value="3">Best of 3</option>
-            <option value="5">Best of 5</option>
-            <option value="7">Best of 7</option>
-          </select>
-        </div>
+         <div class="form-group">
+          <div class="game-type-fan">
+            <div class="btn-wrap">
+              <label class="btn-fan"  >
+                <input type="radio" name="maxLegs" value="3" checked>
+                <span>Best of 3</span>
+              </label>
+              </div>
+            
+              <div class="btn-wrap">
+              <label class="btn-fan">
+                <input type="radio" name="maxLegs" value="5">
+                <span>Best of 5</span>
+                
+            </label>
+            </div>
+            <div class="btn-wrap">
+              <label class="btn-fan">
+                <input type="radio" name="maxLegs" value="7">
+                <span>Best of 7</span>
+                
+            </label>
+            </div>
+          </div>
+          </div>
 
         <div class="form-buttons">
           <button type="submit" class="startgame-button">Start game</button>
@@ -59,6 +91,7 @@ export function setupSection() {
 
       </form>
     </section>
+    </div>
   `;
 }
 

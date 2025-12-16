@@ -17,23 +17,25 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background: #f6f7f9; 
+  background: #ffffff; 
   color: #1f2937;
   font-family: system-ui, sans-serif;
   background-image: url('../images/Backgroundimage.jpg');
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
-  background-position:top;
+  background-position: center;
+  background-attachment: fixed;
 }
 
 
 
  
 #app {
-  max-width: 800px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
-  
+  align-content: center;
+  justify-content: center;
 }
 
 
@@ -44,19 +46,26 @@ body {
   align-items: center;
   padding: 1.5rem 0;
   text-align: center;
-  background: #1f2937; 
-  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  background: #ffffff00; 
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0);
   margin-bottom: 1rem;
 }
 
 .heading-title-fan {
-  font-size: clamp(1.8rem, 2.5vw, 2.8rem);
-  color: #f3f4f6;
+  font-size: 6rem;
   margin: 0;
+  font-family: "Inter", sans-serif;
   font-weight: 700;
+  background: -webkit-linear-gradient(#39FF14, #000000);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
+
 .card-fan {
+  position: relative;
+  overflow: visible;
   background: rgba(0, 0, 0, 0.103);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
@@ -66,28 +75,351 @@ body {
   padding: 1.5rem 1.75rem;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
   margin-bottom: 1.5rem;
+  height: 680px;
+ 
+
+  --dart-width: clamp(290px, 50%, 290px);   
+  --outset-x: 70%;                        
+  --outset-y: 50%;                        
+  --top-inset: 1%; 
+
 }
+
+.game-type-fan {
+  display: flex;
+  overflow: hidden;
+  border-radius: 12px;
+  gap: 12px; 
+}
+
+.btn-fan input {
+  display: none;
+}
+
+
+.btn-fan input {
+  display: none;
+}
+
+.btn-fan span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 18px 0;    /* controls size */
+ 
+
+  background: #0a3;
+  border-radius: 8px;
+  cursor: pointer;
+  user-select: none;
+  width: 100%;
+
+  white-space: nowrap;   /* prevents text wrapping */
+  transition: background 0.2s ease;
+
+  font-family: "Inter", sans-serif;
+  color: #ffffff;
+  font-size: 2.0rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.btn-wrap {
+  flex: 1;           /* each gets equal width */
+}
+
+.btn-wrap + .btn-wrap {
+  border-left: 2x solid rgba(0, 0, 0, 0.2);
+}
+
+.btn-fan input:not(:checked) + span:hover {
+  background: #12b886;
+}
+
+.btn-fan input:checked + span {
+  box-shadow: inset 0 0 0 2px rgba(255,255,255,0.2);
+}
+.btn-fan span {
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+
+.btn-fan input:checked + span {
+  background: #09998d;
+}
+
+.div-flex-fan {
+  display: flex;
+  
+  flex-direction: row;   /* horizontal */
+  gap: 24px;             /* space between players */
+}
+
+.div-flex-row-fan {
+  flex: 1;               /* both take equal width */
+}
+
+.game-type-fan button:active {
+  background: #00ff66;
+}
+.game-type-fan select:focus option:checked {
+  background: #1380ac;
+}
+
+.points-input-fan {
+  height: 28px;
+  font-size: 18px;
+  padding: 6px 10px;
+  width: 80px; 
+  text-align: right;
+
+}
+
+/* this is a style for dart pictures*/
+
+.score-input-row {
+  display: flex;
+  width: 100%;
+  
+  align-items: center;     /* vertical center */
+  justify-content: flex-start; /* left aligned */
+  gap: 16px;
+}
+.corner-icon {
+  position: absolute;
+  z-index: 2;            
+  pointer-events: none;   
+  width: var(--dart-width);
+  height: auto;                
+  object-fit: contain;        
+}
+
+/* Top-left: half outside on both axes */
+.corner-icon.left {
+    top: var(--top-inset);
+  left: 0;
+  transform: translate(calc(-1 * var(--outset-x)),
+                       calc(-1 * var(--outset-y)));
+}
+
+/* Top-right: half outside on both axes */
+.corner-icon.right {
+top: var(--top-inset);
+  right: 0;
+  transform: translate(var(--outset-x),
+                       calc(-1 * var(--outset-y)));
+}
+
+
 
 .card-title-fan {
   margin: 0 0 0.75rem;
-  font-size: 1.3rem;
-  font-weight: 600;
+  font-size: 2.5rem;
   text-align: center;
-  font-family: "Inter", sans-serif;
+  font-weight: bold;
+  background: linear-gradient(to bottom, rgb(9, 80, 23), #00ff00);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
 }
+
+.game-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  color: #d1d5db;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid #fff;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+
+/* Player Panel Styles */
+
+/*player 1*/
+
+.player-panel.active {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  font-size: 17px;
+}
+
+/*player 2*/
+
+.player-panel {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  font-size: 17px;
+}
+
+
+.legs-won {
+  font-weight: 600;
+  margin-right: 0.5rem;
+  text-shadow: 0 0 3px #00ff00, 0 0 6px #00ff00, 0 0 9px #00ff00;
+}
+
+.btn-primary {
+  display: block;
+  background: #1daf2c97;
+  color: #e7e6e6;
+  border-radius: 3px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.5);
+}
+
+.btn-primary:hover {
+  background: #0ab81b
+}
+
+.btn-secondary1 {
+  display: block;
+
+  padding: 15px 40px;
+  font-size: 1.2rem;
+  font-weight: bold;
+    background:
+    radial-gradient(
+      ellipse closest-side at center,
+      #2ed53e 40%,
+      #1f9d2b 100%
+    );
+  color: #000;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.5);
+}
+
+.btn-secondary1:hover {
+  background: #0ab81b
+}
+
+.btn-ctrl{
+  display: block;
+
+  padding: 15px 40px;
+  font-size: 1.2rem;
+  font-weight: bold;
+    background:
+    radial-gradient(
+      ellipse closest-side at center,
+      #2ed53e 40%,
+      #1f9d2b 100%
+    );
+  color: #000;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.5);
+}
+
+.btn-ctrl:hover {
+  background: #0ab81b
+}
+
+.turn-history-scroll {
+  max-height: 500px;  
+  overflow-y: auto;
+}
+
+.history-wrapper {
+  max-height: 60vh;      /* or px value */
+  overflow-y: auto;
+}
+/* hisroty-section.ts css */
+
+.history-table {
+  width: 100%;
+  margin: 1rem auto 0;
+  text-align: center;
+  border-collapse: collapse;
+
+}
+
+.btn-ctrl-row{
+   display: flex;
+    align-items: center; 
+    justify-content: center;
+     gap: 12px; 
+  }
+
 
 @media (max-width: 600px) {
   #app {
+    max-width: 600px;
     padding: 1rem;
+  }
+  .div-flex-fan {
+    flex-direction: column;   /* stack vertically */
+  }
+  .card-title-fan {
+    font-size: 2rem;
+  }
+
+
+  .div-flex-row-fan {
+    width: 100%;
+  }
+
+  .card-fan {
+    height: auto;             /* IMPORTANT: avoid fixed 680px on mobile */
+    min-height: 0;
   }
 
   .card-fan {
     padding: 1.2rem 1rem;
+    
   }
 }
 .hidden-fan {
   display: none !important;
 }
  
+@media (max-width: 600px) {
+  .heading-title-fan {
+    font-size: 2rem;
+  }
+  .btn-fan span {
+    font-size: 1rem;
+  }
 
+
+  .btn-ctrl{
+    min-width: 80px;
+    min-height: 50px;
+    font-size: 1rem;
+    padding: 6px 10px; 
+  }
+  .btn-ctrl-row{
+   display: flex;
+    align-items: center; 
+    justify-content: center;
+     gap: 12px; 
+  }
+   
+}
+
+
+@media (max-width: 600px) {
+  body {
+    background-position: center top;
+    background-size: cover;
+  }
+}
+
+
+
+@media (max-width: 600px) {
+  .card-fan {
+    --dart-width: clamp(42px, 50%, 100px);
+    --outset-x: 14%;
+    --outset-y: 18%;
+  }
+}
 /*end*/

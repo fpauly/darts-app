@@ -9,7 +9,7 @@
  * -------------------------------------------------------
  */
 
-// import { turns } from "./history-section";
+// import { turns } from "./history-section.ts";
 
  
 export const GAME_TYPES = [301, 501] as const;
@@ -46,6 +46,7 @@ export interface GameState {
   currentPlayer: PlayerCount;
   gameType: GameType;
   maxLegs: LegCount;
+  currentTurn:number;
 }
 
 /* ----------------------
@@ -54,6 +55,7 @@ export interface GameState {
 
 export interface TurnRecord {
   id: number;
+  turnid:number;
   player: 1 | 2;
   points: number;
   remaining: number;   // score after this turn
@@ -74,6 +76,7 @@ export function createInitialGameState(settings: GameSettings): GameState {
       score: startingScore,
       legs: 0
     },
+    currentTurn:1,
     currentPlayer: 1,              //default player
     gameType: settings.gameType,  
     maxLegs: settings.maxLegs      
@@ -102,6 +105,7 @@ export function initGameState(settings: GameSettings) {
       score: settings.gameType,
       legs: 0
     },
+    currentTurn: 1,
     currentPlayer: 1,
     gameType: settings.gameType,
     maxLegs: settings.maxLegs

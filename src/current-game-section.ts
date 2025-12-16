@@ -1,60 +1,75 @@
 import { gameState } from "./game-setting";
-import { renderHistory, turns} from "./history-section";
+import { historyEvents, onDeleteTurn, renderHistory, setTurns, turns} from "./history-section";
 import { initAll } from "./main";
 
 export function currentGameSection() {
   const state = gameState;
     
   return `
+  <div class="div-flex-row-fan">
     <section class="card-fan"  id="current_game_section">
       <h2 class="card-title-fan">Current Game</h2>
-      <div class="game-meta">
+      <div >
+      <div>
         <p><strong>Game type:</strong> ${state.gameType} up</p>
+        </div>
+        <div>
         <p><strong>Set size:</strong> Best of ${state.maxLegs} legs (first to ${Math.floor(state.maxLegs/2)+1})</p>
+        </div>
         <!--<p><strong>Current Player:</strong> ${state.currentPlayer===1?state.player1.name:state.player2.name}</p>-->
       </div>
       <div class="current-grid">
 <hr>
         <!-- Player 1 -->
-        <div name= "player1">
+        <div name= "player1" >
           <div class="player-panel ${state.currentPlayer === 1 ? "active" : ""}">
-            <h3>${state.player1.name}</h3>
-            <p>Score: <strong>${state.player1.score}</strong></p>
-            <p>Legs won: ${state.player1.legs}</p>
+            <h3><strong>Player: ${state.player1.name}</strong></h3>
+            <div>
+            <span class="legs-won">Legs won: ${state.player1.legs}</span>
+              <span class="legs-won">Score: <strong>${state.player1.score}</strong></span>
+              
+            </div>
           </div>
           <!-- Score input -->
-          <div class="score-input-row">
-            <label for="score-input1">Points:</label>
-            <input id="score-input1" onclick="this.select()" type="number" min="0" max="180" value="0">
-            <button id="add-score-btn1" class="btn-primary">Add</button>
-            <button id="end-leg-btn1" hidden class="btn-secondary">Give up</button>
-          </div>
+          
         </div>
+        <div class="score-input-row">
+            <label for="score-input1"><strong>&nbsp;&nbsp;Points:</strong></label>
+            <input id="score-input1" class="points-input-fan" onclick="this.select()" type="number" min="0" max="180" value="0">
+            <button id="add-score-btn1" class="btn-ctrl">Add</button>
+          </div>
 <hr>
         <!-- Player 2 -->
-        <div name= "player2">
+        <div name= "player2" >
           <div class="player-panel ${state.currentPlayer === 2 ? "active" : ""}">
-            <h3>${state.player2.name}</h3>
-            <p>Score: <strong>${state.player2.score}</strong></p>
-            <p>Legs won: ${state.player2.legs}</p>
+            <h3><strong>Player: ${state.player2.name}</strong></h3>
+            <div>
+            <span class="legs-won">Legs won: ${state.player2.legs}</span>
+              <span class="legs-won">Score: <strong>${state.player2.score}</strong></span>
+              
+            </div>
+    
           </div>
 
         </div>
 
         <!-- Score input -->
         <div class="score-input-row">
-          <label for="score-input2">Points:</label>
-          <input id="score-input2" onclick="this.select()" type="number" min="0" max="180" value="0">
-          <button id="add-score-btn2" class="btn-primary">Add</button>
-          <button id="end-leg-btn2" hidden class="btn-secondary">Give up</button>
+          <label for="score-input2"><strong>&nbsp;&nbsp;Points:</strong></label>
+          <input id="score-input2" class="points-input-fan" onclick="this.select()" type="number" min="0" max="180" value="0">
+          <button id="add-score-btn2" class="btn-ctrl">Add</button>
         </div>
       </div>
       
       <hr>
-      <div>
-      <button id="new-match" class="btn-secondary">New Match</button>
+      <br>
+      <div class="btn-ctrl-row">
+      <button id="clear-input" class="btn-ctrl">Clear Points</button>
+      <button id="reset-turn" class="btn-ctrl">Reset Leg</button>
+      <button id="new-match" class="btn-ctrl">New Match</button>
       </div>
     </section>
+    </div>
   `;
 }
 
@@ -66,13 +81,21 @@ export function currentGameSection() {
 export function currentGameEvents() {
   const input1 = document.querySelector<HTMLInputElement>("#score-input1");
   const addBtn1 = document.querySelector("#add-score-btn1");
-  const endLegBtn1 = document.querySelector("#end-leg-btn1");
+ 
 
   const input2 = document.querySelector<HTMLInputElement>("#score-input2");
   const addBtn2 = document.querySelector("#add-score-btn2");
-  const endLegBtn2 = document.querySelector("#end-leg-btn2");
 
-  if (!input1 || !addBtn1 || !endLegBtn1||!input2 || !addBtn2 || !endLegBtn2) return;
+  const clearBtn = document.querySelector("#clear-input");
+  const resetTurnBtn = document.querySelector("#reset-turn");
+
+
+  clearBtn?.addEventListener("click", clearInputs);
+  resetTurnBtn?.addEventListener("click", resetLeg);
+  
+ 
+
+  if (!input1 || !addBtn1 ||!input2 || !addBtn2 ) return;
 
   addBtn1.addEventListener("click", () => {
     
@@ -110,12 +133,25 @@ export function currentGameEvents() {
     });
   }
 
-  endLegBtn1.addEventListener("click", () => {
-    onEndLeg();
-  });
-  endLegBtn2.addEventListener("click", () => {
-    onEndLeg();
-  });
+  
+}
+
+export function clearInputs() {
+  const input1 = document.querySelector<HTMLInputElement>("#score-input1");
+  const input2 = document.querySelector<HTMLInputElement>("#score-input2");
+
+  input1 && (input1.value = "0");
+  input2 && (input2.value = "0");
+}
+
+export function resetLeg() {
+  clearInputs();
+  // gameState.currentTurn--;
+  setTurns(turns.filter(t=>t.turnid !== gameState.currentTurn));
+  gameState.player1.score=gameState.gameType;
+  gameState.player2.score=gameState.gameType;
+  renderCurrentGame();
+  reRenderHistory();
 }
 
 export function renderCurrentGame() {
@@ -147,6 +183,7 @@ function onAddScore(points:number, whoIsPlaying:1|2){
   p.score -= points;
 
    turns.push({
+    turnid:gameState.currentTurn,
     id: Date.now(),         
     player: whoIsPlaying as 1 | 2,
     points,
@@ -168,7 +205,9 @@ function onAddScore(points:number, whoIsPlaying:1|2){
         return;
       }
       else {
-        renderHistory();
+        gameState.currentTurn++;
+        // renderHistory();
+        reRenderHistory();
         alert(`${p.name} wins one leg!`);
         return startNextLeg(whoIsPlaying);
       }
@@ -185,7 +224,13 @@ function onAddScore(points:number, whoIsPlaying:1|2){
   const otherInputAfter = document.querySelector<HTMLInputElement>(otherSelector);
   if (otherInputAfter) otherInputAfter.value = otherValue ?? "";
 
+  // renderHistory();
+  reRenderHistory();
+}
+
+function reRenderHistory() {
   renderHistory();
+  historyEvents(onDeleteTurn);
 }
 export function startNewMatch(){
   // const form = document.querySelector<HTMLFormElement>("#game-settings-form");
@@ -211,6 +256,4 @@ export function startNextLeg(winner: 1 | 2) {
 
   renderCurrentGame();
 }
-function onEndLeg(){
-
-}
+ 

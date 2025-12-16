@@ -2,7 +2,7 @@ import './style.css'
 
 import { setupSection, setupEvents } from './setup-section'
 import { currentGameEvents, currentGameSection } from './current-game-section'
-import {  clearTurns, historySection } from "./history-section";
+import {  clearTurns, historyEvents, historySection, onDeleteTurn } from "./history-section";
 import { initGameState, type GameSettings } from './game-setting';
 
 
@@ -22,7 +22,7 @@ export function initAll() {
   // historyEvents(deleteTurn);
 }
 
-export function startGame(settings:GameSettings) { 
+export function startGame(settings:GameSettings) {
 
   initGameState(settings);
   clearTurns();
@@ -32,6 +32,7 @@ export function startGame(settings:GameSettings) {
   // hideSection("game_setting_section");
   // showSection("current_game_section");
   currentGameEvents();
+  historyEvents(onDeleteTurn ) ;
    
 }
 
