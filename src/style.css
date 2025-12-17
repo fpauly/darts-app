@@ -348,9 +348,11 @@ top: var(--top-inset);
     justify-content: center;
      gap: 12px; 
   }
+.hidden-fan {
+  display: none !important;
+}
 
-
-@media (max-width: 600px) {
+@media (max-width: 780px) {
   #app {
     max-width: 600px;
     padding: 1rem;
@@ -376,12 +378,7 @@ top: var(--top-inset);
     padding: 1.2rem 1rem;
     
   }
-}
-.hidden-fan {
-  display: none !important;
-}
- 
-@media (max-width: 600px) {
+
   .heading-title-fan {
     font-size: 2rem;
   }
@@ -402,24 +399,19 @@ top: var(--top-inset);
     justify-content: center;
      gap: 12px; 
   }
-   
-}
 
-
-@media (max-width: 600px) {
   body {
     background-position: center top;
     background-size: cover;
   }
-}
 
-
-
-@media (max-width: 600px) {
   .card-fan {
     --dart-width: clamp(42px, 50%, 100px);
     --outset-x: 14%;
     --outset-y: 18%;
   }
 }
+
+
+
 /*end*/

@@ -120,7 +120,7 @@ font-family: "Inter", sans-serif;
 
 
 
-@media (max-width: 600px) {
+@media (max-width: 780px) {
   .selectbuttons {
     height: 4rem;
   }
