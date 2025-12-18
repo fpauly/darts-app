@@ -1,6 +1,7 @@
 // import { renderCurrentGame } from "./current-game-section";
 import { renderCurrentGame } from "./current-game-section";
 import { gameState, type TurnRecord } from "./game-setting";
+import { confirmHUD, showHUD } from "./hud";
 
  
 export let turns:TurnRecord[] = [];
@@ -64,12 +65,26 @@ export function historyEvents(onDeleteTurn: (id: number) => void) {
     onDeleteTurn(id);
   });
 }
-export const onDeleteTurn = (id: number) => {
+export const onDeleteTurn = async(id: number) => {
   // console.log(id);
   const toDelete: TurnRecord | undefined = turns.find(t => t.id === id);
 
   if (!toDelete) return;
   
+  const ok = await confirmHUD({
+    title: "Delete this turn?",
+    message: `This will restore ${toDelete.points} points to ${
+      toDelete.player === 1 ? gameState.player1.name : gameState.player2.name
+    } and update the history.`,
+    okText: "Delete",
+    cancelText: "Cancel",
+  });
+
+  if (!ok) {
+    showHUD("Cancelled.", "warn", 1200);
+    return;
+  }
+
   if (toDelete.player===1){
     gameState.player1.score += toDelete.points;
   }
@@ -125,3 +140,4 @@ export const setTurns = (newRecords:TurnRecord[])=>{
 export function clearTurns(){
   turns = [];
 }
+

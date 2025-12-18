@@ -11,7 +11,17 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+
+  /*message hud*/
+  --hud-green: #19ff2a;
+  --hud-green-dark: #0fb31d;
+  --hud-bg: rgba(15, 15, 15, 0.55);
+  --hud-panel: rgba(10, 10, 10, 0.55);
+  --hud-border: rgba(25, 255, 42, 0.28);
+  --hud-shadow: 0 18px 60px rgba(0,0,0,.55);
 }
+
 
 body {
   margin: 0;

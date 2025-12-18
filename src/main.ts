@@ -1,17 +1,18 @@
 import './style.css'
-
+import './hud.css'
 import { setupSection, setupEvents } from './setup-section'
 import { currentGameEvents, currentGameSection } from './current-game-section'
 import {  clearTurns, historyEvents, historySection, onDeleteTurn } from "./history-section";
 import { initGameState, type GameSettings } from './game-setting';
-
+import { mountHUD, showHUD } from "./hud";
+ 
 
 const app = document.querySelector<HTMLDivElement>('#app')!
 
 
 
 export function initAll() {
- 
+  mountHUD();  
   // if(!gameState){
   //   return;
   // }
@@ -52,3 +53,14 @@ window.addEventListener("unhandledrejection", (e) => {
 });
 
  
+/* ---------- GLOBAL ERROR HANDLERS ---------- */
+
+window.addEventListener("error", (e) => {
+  console.error("Global error:", e.error);
+  showHUD("A fatal error occurred. Check console for details.", "bad", 2200);
+});
+
+window.addEventListener("unhandledrejection", (e) => {
+  console.error("Unhandled promise rejection:", e.reason);
+  showHUD("Unhandled promise rejection. Check console.", "bad", 2200);
+});

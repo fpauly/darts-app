@@ -1,5 +1,6 @@
 import { gameState } from "./game-setting";
 import { historyEvents, onDeleteTurn, renderHistory, setTurns, turns} from "./history-section";
+import { confirmHUD, showHUD } from "./hud";
 import { initAll } from "./main";
 
 export function currentGameSection() {
@@ -23,7 +24,7 @@ export function currentGameSection() {
         <!-- Player 1 -->
         <div name= "player1" >
           <div class="player-panel ${state.currentPlayer === 1 ? "active" : ""}">
-            <h3><strong>Player: ${state.player1.name}</strong></h3>
+            <h3><strong>Player 1: ${state.player1.name}</strong></h3>
             <div>
             <span class="legs-won">Legs won: ${state.player1.legs}</span>
               <span class="legs-won">Score: <strong>${state.player1.score}</strong></span>
@@ -42,7 +43,7 @@ export function currentGameSection() {
         <!-- Player 2 -->
         <div name= "player2" >
           <div class="player-panel ${state.currentPlayer === 2 ? "active" : ""}">
-            <h3><strong>Player: ${state.player2.name}</strong></h3>
+            <h3><strong>Player 2: ${state.player2.name}</strong></h3>
             <div>
             <span class="legs-won">Legs won: ${state.player2.legs}</span>
               <span class="legs-won">Score: <strong>${state.player2.score}</strong></span>
@@ -91,7 +92,7 @@ export function currentGameEvents() {
 
 
   clearBtn?.addEventListener("click", clearInputs);
-  resetTurnBtn?.addEventListener("click", resetLeg);
+  resetTurnBtn?.addEventListener("click", onResetLeg);
   
  
 
@@ -101,11 +102,13 @@ export function currentGameEvents() {
     
     const points = Number(input1.value);
     if (!Number.isFinite(points)) {
-      alert("Please enter a valid number!");
+      // alert("Please enter a valid number!");
+      showHUD("Please enter a valid number!", "bad");
       return;
     }
     if(points <1||points>180){
-      alert(`Points must between 1 and 180!`);
+      // alert(`Points must between 1 and 180!`);
+      showHUD("Points must between 1 and 180!", "bad");
       return;
     }
     if (!Number.isFinite(points) || points < 0 || points > 180) return;
@@ -115,11 +118,13 @@ export function currentGameEvents() {
   addBtn2.addEventListener("click", () => {
     const points = Number(input2.value);
     if (!Number.isFinite(points)) {
-      alert("Please enter a valid number!");
+      // alert("Please enter a valid number!");
+      showHUD("Please enter a valid number!", "bad");
       return;
     }
     if(points <1||points>180){
-      alert(`Points must between 1 and 180!`);
+      // alert(`Points must between 1 and 180!`);
+      showHUD("Points must between 1 and 180!", "bad");
       return;
     }
     if (!Number.isFinite(points) || points < 0 || points > 180) return;
@@ -142,6 +147,7 @@ export function clearInputs() {
 
   input1 && (input1.value = "0");
   input2 && (input2.value = "0");
+  showHUD("Inputs cleared.", "good", 1200);
 }
 
 export function resetLeg() {
@@ -152,6 +158,23 @@ export function resetLeg() {
   gameState.player2.score=gameState.gameType;
   renderCurrentGame();
   reRenderHistory();
+}
+
+async function onResetLeg() {
+  const ok = await confirmHUD({
+    title: "Reset leg?",
+    message: "This will clear current leg scores and turn history.",
+    okText: "Yes, reset",
+    cancelText: "Cancel",
+  });
+
+  if (!ok) {
+    showHUD("Cancelled.", "warn");
+    return;
+  }
+
+  resetLeg(); // your existing logic
+  showHUD("Leg reset.", "good");
 }
 
 export function renderCurrentGame() {
@@ -170,10 +193,14 @@ function onAddScore(points:number, whoIsPlaying:1|2){
   const p = whoIsPlaying === 1 ? gameState.player1 : gameState.player2;
 
   if (p.score - points < 0) {
-    return alert("Score bust! You cannot go below zero.");
+    // return alert("Score bust! You cannot go below zero.");
+    showHUD("Score bust! You cannot go below zero.", "bad");
+    return;
   }
   if (p.score - points === 1) {
-    return alert("Score bust! Cannot finish on 1.");
+     //return alert("Score bust! Cannot finish on 1.");
+    showHUD("Score bust! Cannot finish on 1.", "bad");
+    return;
   }
 
   const otherSelector = whoIsPlaying === 1 ? "#score-input2" : "#score-input1";
@@ -198,17 +225,19 @@ function onAddScore(points:number, whoIsPlaying:1|2){
       const legsToWin = Math.floor(gameState.maxLegs / 2) + 1;
 
       if (p.legs >= legsToWin) {
-        alert(`${p.name} wins the match!`);
-
+        reRenderHistory();
+        // alert(`${p.name} wins the match!`);
+        showHUD(`${p.name} wins the match!`, "good");
   
-        startNewMatch();
+        winTheMatch(p.name);
         return;
       }
       else {
         gameState.currentTurn++;
         // renderHistory();
         reRenderHistory();
-        alert(`${p.name} wins one leg!`);
+        // alert(`${p.name} wins one leg!`);
+        showHUD(`${p.name} wins one leg!`, "good");
         return startNextLeg(whoIsPlaying);
       }
     
@@ -232,17 +261,49 @@ function reRenderHistory() {
   renderHistory();
   historyEvents(onDeleteTurn);
 }
-export function startNewMatch(){
-  // const form = document.querySelector<HTMLFormElement>("#game-settings-form");
-  // if (form) {
-  //   form.reset();
-  // }
+export async function startNewMatch(){
+  const ok = await confirmHUD({
+    title: "Start new match?",
+    message: "This will reset the current match and clear the turn history.",
+    okText: "Yes, start",
+    cancelText: "Cancel",
+  });
 
-  
-  // showSection("game_setting_section");
-  // hideSection("current_game_section");
-  // setupEvents(startGame);
+  if (!ok) {
+    showHUD("Cancelled.", "warn", 1200);
+    return;
+  }
+
   initAll();
+  showHUD("New match started.", "good", 1400);
+}
+
+export async function winTheMatch(uName:string) {
+  
+  // console.log(uName);
+
+  const ok = await confirmHUD({
+    title: `${uName} wins the match!`,
+    message: "Do you want to start a new match?",
+    okText: "New match",
+    cancelText: "Cancel",
+  });
+
+  if (!ok) {
+    const input1 = document.querySelector<HTMLInputElement>("#score-input1");
+    const input2 = document.querySelector<HTMLInputElement>("#score-input2");
+
+    input1 && (input1.value = "0");
+    input2 && (input2.value = "0");
+
+    renderCurrentGame();
+    
+    return;
+
+  }
+    
+
+  initAll(); // or initAll()
 }
 
 export function startNextLeg(winner: 1 | 2) {

@@ -1,0 +1,83 @@
+.hud-toast{
+  position: fixed;
+  left: 50%;
+  bottom: 26px;
+  transform: translateX(-50%) translateY(10px);
+  background: var(--hud-panel);
+  border: 1px solid var(--hud-border);
+  box-shadow: var(--hud-shadow);
+  color: rgba(255,255,255,.92);
+  padding: 10px 14px;
+  border-radius: 10px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  font-family: system-ui, sans-serif;
+  font-weight: 800;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .18s ease, transform .18s ease;
+  z-index: 9999;
+}
+.hud-toast.show{ opacity: 1; transform: translateX(-50%) translateY(0); }
+.hud-toast.good{ border-color: rgba(25,255,42,.45); }
+.hud-toast.warn{ border-color: rgba(255,170,0,.45); }
+.hud-toast.bad { border-color: rgba(255,60,60,.45); }
+
+.hud-overlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.55);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+.hud-overlay.show{ display: flex; }
+
+.hud-modal{
+  width: min(520px, calc(100vw - 32px));
+  background: var(--hud-bg);
+  border: 1px solid var(--hud-border);
+  border-radius: 16px;
+  box-shadow: var(--hud-shadow);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 18px 18px 16px;
+}
+.hud-title{
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--hud-green);
+  text-shadow: 0 0 10px rgba(25,255,42,.18);
+  margin-bottom: 10px;
+}
+.hud-message{
+  color: rgba(255,255,255,.88);
+  font-size: 14.5px;
+  line-height: 1.4;
+  margin-bottom: 14px;
+  white-space: pre-line;
+}
+.hud-actions{ display:flex; gap:10px; justify-content:flex-end; }
+
+.hud-btn{
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 12px;
+  padding: 10px 16px;
+  font-weight: 900;
+  cursor: pointer;
+  font-family: system-ui, sans-serif;
+}
+.hud-btn-primary{
+  color: #062006;
+  border-color: rgba(25,255,42,.35);
+  background: radial-gradient(120% 140% at 50% 0%,
+    rgba(25,255,42,.95) 0%,
+    rgba(17,165,30,.90) 55%,
+    rgba(10,110,18,.90) 100%);
+}
+.hud-btn-ghost{
+  color: rgba(255,255,255,.9);
+  background: rgba(255,255,255,.06);
+  border-color: rgba(255,255,255,.14);
+}
