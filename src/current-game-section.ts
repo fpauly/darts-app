@@ -287,7 +287,7 @@ export async function winTheMatch(uName:string) {
   
   // console.log(uName);
 
-  const ok = await infoHUD({
+  await infoHUD({
     title: `${uName} wins the match!`,
     message: "Do you want to start a new match?",
     okText: "New match",
