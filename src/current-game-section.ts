@@ -1,6 +1,6 @@
 import { gameState } from "./game-setting";
 import { historyEvents, onDeleteTurn, renderHistory, setTurns, turns} from "./history-section";
-import { confirmHUD, showHUD } from "./hud";
+import { confirmHUD, infoHUD, showHUD } from "./hud";
 import { initAll } from "./main";
 
 export function currentGameSection() {
@@ -153,6 +153,11 @@ export function clearInputs() {
 export function resetLeg() {
   clearInputs();
   // gameState.currentTurn--;
+
+  if (!turns.some(t => t.turnid === gameState.currentTurn)) {
+    return;
+  } 
+
   setTurns(turns.filter(t=>t.turnid !== gameState.currentTurn));
   gameState.player1.score=gameState.gameType;
   gameState.player2.score=gameState.gameType;
@@ -282,25 +287,27 @@ export async function winTheMatch(uName:string) {
   
   // console.log(uName);
 
-  const ok = await confirmHUD({
+  const ok = await infoHUD({
     title: `${uName} wins the match!`,
     message: "Do you want to start a new match?",
     okText: "New match",
-    cancelText: "Cancel",
+    // cancelText: "Cancel",
   });
 
-  if (!ok) {
-    const input1 = document.querySelector<HTMLInputElement>("#score-input1");
-    const input2 = document.querySelector<HTMLInputElement>("#score-input2");
+  // if (!ok) {
+  //   const input1 = document.querySelector<HTMLInputElement>("#score-input1");
+  //   const input2 = document.querySelector<HTMLInputElement>("#score-input2");
 
-    input1 && (input1.value = "0");
-    input2 && (input2.value = "0");
+  //   input1 && (input1.value = "0");
+  //   input2 && (input2.value = "0");
 
-    renderCurrentGame();
+  //   gameState.currentTurn--;
+
+  //   renderCurrentGame();
     
-    return;
+  //   return;
 
-  }
+  // }
     
 
   initAll(); // or initAll()

@@ -84,3 +84,62 @@ export function confirmHUD(opts?: {
     document.addEventListener("keydown", onKey);
   });
 }
+
+export function infoHUD(opts?: {
+  title?: string;
+  message?: string;
+  okText?: string;
+}): Promise<void> {
+  mountHUD();
+
+  const overlay = document.getElementById("hudOverlay");
+  const titleEl = document.getElementById("hudTitle");
+  const msgEl = document.getElementById("hudMessage");
+  const okBtn = document.getElementById("hudOkBtn") as HTMLButtonElement | null;
+  const cancelBtn = document.getElementById("hudCancelBtn") as HTMLButtonElement | null;
+
+  if (!overlay || !titleEl || !msgEl || !okBtn || !cancelBtn) {
+    return Promise.resolve();
+  }
+
+  const {
+    title = "Info",
+    message = "",
+    okText = "OK",
+  } = opts ?? {};
+
+  titleEl.textContent = title;
+  msgEl.textContent = message;
+  okBtn.textContent = okText;
+
+   
+  cancelBtn.style.display = "none";
+
+  overlay.classList.add("show");
+  overlay.setAttribute("aria-hidden", "false");
+  okBtn.focus();
+
+  return new Promise((resolve) => {
+    const cleanup = () => {
+      overlay.classList.remove("show");
+      overlay.setAttribute("aria-hidden", "true");
+      cancelBtn.style.display = ""; // restore for confirmHUD
+      okBtn.removeEventListener("click", onOk);
+      overlay.removeEventListener("click", onOverlay);
+      document.removeEventListener("keydown", onKey);
+      resolve();
+    };
+
+    const onOk = () => cleanup();
+    const onOverlay = (e: MouseEvent) => {
+      if (e.target === overlay) cleanup();
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Enter" || e.key === "Escape") cleanup();
+    };
+
+    okBtn.addEventListener("click", onOk);
+    overlay.addEventListener("click", onOverlay);
+    document.addEventListener("keydown", onKey);
+  });
+}
