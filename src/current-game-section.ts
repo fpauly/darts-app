@@ -50,8 +50,12 @@ export function currentGameSection() {
           <input id="score-input1-1" class="points-input-fan" type="number" min="0" max="60" value="0" onclick="this.select()">
           <input id="score-input1-2" class="points-input-fan" type="number" min="0" max="60" value="0" onclick="this.select()">
           <input id="score-input1-3" class="points-input-fan" type="number" min="0" max="60" value="0" onclick="this.select()">
-          <button id="add-score-btn1" class="btn-ctrl" type="button">Add</button>
+          
         </div>
+        <br>
+        <div style="display: flex; justify-content: center;">
+          <button id="add-score-btn1" class="btn-ctrl" type="button">Add</button>
+          </div>
 
         <hr>
 
@@ -72,8 +76,12 @@ export function currentGameSection() {
           <input id="score-input2-1" class="points-input-fan" type="number" min="0" max="60" value="0" onclick="this.select()">
           <input id="score-input2-2" class="points-input-fan" type="number" min="0" max="60" value="0" onclick="this.select()">
           <input id="score-input2-3" class="points-input-fan" type="number" min="0" max="60" value="0" onclick="this.select()">
-          <button id="add-score-btn2" class="btn-ctrl" type="button">Add</button>
+          
         </div>
+        <br>
+        <div style="display: flex; justify-content: center;">
+          <button id="add-score-btn2" class="btn-ctrl" type="button">Add</button>
+          </div>
       </div>
 
       <hr>
