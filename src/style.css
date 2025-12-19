@@ -85,7 +85,7 @@ body {
   padding: 1.5rem 1.75rem;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
   margin-bottom: 1.5rem;
-  height: 680px;
+  height: 800px;
  
 
   --dart-width: clamp(290px, 50%, 290px);   
